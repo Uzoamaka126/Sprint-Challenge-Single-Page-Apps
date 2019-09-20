@@ -3,15 +3,28 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import CharacterCard from './CharacterCard';
 
-export default function CharacterList(props) {
+
+const api = 'https://rickandmortyapi.com/api/character/';
+
+export default function CharacterList() {
   // TODO: Add useState to track data from useEffect
-  // const { name, species, status, gender, image } = props.characters;
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(() => {
+    axios.get(api)
+    .then(res => {
+      setCharacters(res.data.results)
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }, []);
 
   return (
     <section className="character-list">
     {/* <h2>TODO: `array.map()` over your state here!</h2> */}
-      <h2>
-      {/* {props.characters.map(character => (
+      <div>
+        {characters.map(character => (
           <CharacterCard 
             key={character.id} 
             name={character} 
@@ -20,8 +33,8 @@ export default function CharacterList(props) {
             gender={character.gender}
             imgUrl={character.image}
             />
-      ))} */}
-      </h2>
+        ))}
+      </div>
   </section>
   );
 }

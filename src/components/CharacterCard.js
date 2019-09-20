@@ -6,7 +6,7 @@ function CharacterCard(props) {
   const [character, setCharacter] = useEffect();
 
   const id = props.match.params.id;
-  const { name, status, species, gender, location, image } = props;
+  // const { name, status, species, gender, location, image } = props.characters;
   // if (props.image === "N/A") {
   //   return 'Empty Image'
   // } else {
@@ -15,18 +15,6 @@ function CharacterCard(props) {
   //         />
   // }
 
-  useEffect(() => {
-    axios
-    .get(`https://rickandmortyapi.com/api/character/${id}`)
-    .then(res => {
-      console.log(res.data.results)
-      setCharacter(res.data.results);
-    })
-    .catch(error => {
-      console.error(error);
-    })
-  }, [id]);
-
   if (!character) {
     return <div>Loading characters...</div>
   }
@@ -34,7 +22,10 @@ function CharacterCard(props) {
   return (
     <div>
       {/* <CharacterCard character={character} /> */}
-      <h2>{props.name}</h2>
+      <h2>
+
+        
+      </h2>
     </div>
   )
 }

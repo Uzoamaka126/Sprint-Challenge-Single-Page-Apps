@@ -30,12 +30,12 @@ export default function App() {
           // console.log(res.data.results);
           // debugger
           setCharactersData(res.data.results);
-          console.log(charactersData)
         })
         .catch(error => {
           console.log('Server Error', error);
         });
   }, []);
+  console.log(charactersData)
 
   if (charactersData) {
     return (
