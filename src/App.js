@@ -4,6 +4,7 @@ import Header from "./components/Header.js";
 import WelcomePage from './components/WelcomePage';
 import CharacterList from './components/CharacterList';
 import axios from 'axios';
+import SearchForm from './components/SearchForm'
 
 const api = 'https://rickandmortyapi.com/api/character/';
 
@@ -42,7 +43,7 @@ export default function App() {
      <Router>
         <main>
           <Header />
-          {/* <SearchForm onSearch={onSearch} searchInput={searchInput} /> */}
+          <SearchForm onSearch={onSearch} searchInput={searchInput} />
           <nav>
             <Link to="/">Home</Link>
             <Link to="/welcome">Welcome</Link>
@@ -50,7 +51,9 @@ export default function App() {
           </nav>
         <Route exact path='/welcome' component={WelcomePage} />
         <Route  exact path='/characters' 
-          render={() => <CharacterList characterList={charactersData}/>}
+          render={() => <CharacterList characterList={charactersData.filter(char => {
+            return char.name.includes(searchInput);
+          })}/>}
         />
         {/* <Route  exact path='/charact' component={CharacterList} /> */}
 

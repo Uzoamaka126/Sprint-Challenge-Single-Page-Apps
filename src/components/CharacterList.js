@@ -19,13 +19,14 @@ export default function CharacterList() {
       console.log(error);
     })
   }, []);
-
+ console.log(characters)
   return (
     <section className="character-list">
     {/* <h2>TODO: `array.map()` over your state here!</h2> */}
       <div>
         {characters.map(character => (
           <CharacterCard 
+            character={character}
             key={character.id} 
             name={character} 
             species={character.species}
