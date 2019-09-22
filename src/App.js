@@ -9,15 +9,21 @@ import SearchForm from './components/SearchForm'
 const api = 'https://rickandmortyapi.com/api/character/';
 
 export default function App() {
+
   const [ charactersData, setCharactersData ] = useState([]);
   const [searchInput, setSearchInput] = useState('');
+  // const [ searchable, setSearchable ] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  
+  const onSearch = (event) => {
+    setSearchInput(event.target.value)
+  }
 
-  // const addToCharacterList = character => {
-  //   setAllCharacters( [...allCharactersList, character] );
+  // const onSubmit = (event) => {
+  //   event.preventDefault();
+  //   axios.get(`https://rickandmortyapi.com/api/character/?name=${searchInput}`)
+  //   .then(res => setCharactersData(res.data));
   // };
-  const onSearch = evt => {
-    setSearchInput(evt.target.value)
-  };
 
   useEffect(() => {
     // TODO: Add API Request here - must run in `useEffect`
@@ -31,12 +37,30 @@ export default function App() {
           // console.log(res.data.results);
           // debugger
           setCharactersData(res.data.results);
+          // setSearchable(false);
         })
         .catch(error => {
           console.log('Server Error', error);
         });
   }, []);
   console.log(charactersData)
+
+  // const onSearch = (event) => {
+  //   event.preventDefault();
+  //   setSearchable(true);
+    
+  //   axios.get(`https://rickandmortyapi.com/api/character/?name=${searchInput}`)
+  //     .then(res => res.data)
+  //     .then(res => {
+  //       if(res) {
+  //         const searchResult = res.data.filter(item => item.name)
+  //         setCharactersData(searchResult);
+          
+  //       } else {
+  //         setErrorMessage('not found');
+  //       }
+  //     })
+  // }
 
   if (charactersData) {
     return (
@@ -46,17 +70,24 @@ export default function App() {
           <SearchForm onSearch={onSearch} searchInput={searchInput} />
           <nav>
             <Link to="/">Home</Link>
-            <Link to="/welcome">Welcome</Link>
-            <Link to="/characters">List of Characters</Link>
+            <Link to="/characters">Characters</Link>
+            <Link to="/location">Location</Link>
           </nav>
-        <Route exact path='/welcome' component={WelcomePage} />
-        <Route  exact path='/characters' 
+        <Route path='/welcome' component={WelcomePage} />
+        {/* <Route 
+          path='/characters'
+          render={() => (
+            <SearchForm
+              search={searchApp}
+            />
+          )}
+          /> */}
+        <Route 
+          path='/characters' 
           render={() => <CharacterList characterList={charactersData.filter(char => {
             return char.name.includes(searchInput);
-          })}/>}
+          })} />}
         />
-        {/* <Route  exact path='/charact' component={CharacterList} /> */}
-
       </main>
      </Router>
     );
