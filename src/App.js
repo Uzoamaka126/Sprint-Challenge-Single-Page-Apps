@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Header from "./components/Header.js";
 import WelcomePage from './components/WelcomePage';
 import CharacterList from './components/CharacterList';
 import axios from 'axios';
 import SearchForm from './components/SearchForm'
+import styled from 'styled-components';
+
+
 
 const api = 'https://rickandmortyapi.com/api/character/';
 
@@ -25,25 +27,25 @@ export default function App() {
   //   .then(res => setCharactersData(res.data));
   // };
 
-  useEffect(() => {
-    // TODO: Add API Request here - must run in `useEffect`
-    //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
-      axios
-        .get(api)
-        .then(res => {
-          // debugger
-          // console.log(res);
-          // console.log(res.data);
-          // console.log(res.data.results);
-          // debugger
-          setCharactersData(res.data.results);
-          // setSearchable(false);
-        })
-        .catch(error => {
-          console.log('Server Error', error);
-        });
-  }, []);
-  console.log(charactersData)
+  // useEffect(() => {
+  //   // TODO: Add API Request here - must run in `useEffect`
+  //   //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
+  //     axios
+  //       .get(api)
+  //       .then(res => {
+  //         // debugger
+  //         // console.log(res);
+  //         // console.log(res.data);
+  //         // console.log(res.data.results);
+  //         // debugger
+  //         setCharactersData(res.data.results);
+  //         // setSearchable(false);
+  //       })
+  //       .catch(error => {
+  //         console.log('Server Error', error);
+  //       });
+  // }, []);
+  // console.log(charactersData)
 
   // const onSearch = (event) => {
   //   event.preventDefault();
@@ -66,28 +68,20 @@ export default function App() {
     return (
      <Router>
         <main>
-          <Header />
           <SearchForm onSearch={onSearch} searchInput={searchInput} />
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/characters">Characters</Link>
-            <Link to="/location">Location</Link>
-          </nav>
-        <Route path='/welcome' component={WelcomePage} />
-        {/* <Route 
-          path='/characters'
-          render={() => (
-            <SearchForm
-              search={searchApp}
-            />
-          )}
-          /> */}
-        <Route 
-          path='/characters' 
-          render={() => <CharacterList characterList={charactersData.filter(char => {
-            return char.name.includes(searchInput);
-          })} />}
-        />
+          <WelcomePage />
+          <Route exact path='/welcome' component={WelcomePage} />
+          <Route exact
+            path='/characters' 
+            // render={() => <CharacterList characterList={charactersData.filter(char => {
+            //   return char.name.includes(searchInput);
+            // })} 
+            render={() => 
+              <CharacterList CharacterList={charactersData.map(item => {
+                return item.name;
+              })}
+            />}
+          />
       </main>
      </Router>
     );

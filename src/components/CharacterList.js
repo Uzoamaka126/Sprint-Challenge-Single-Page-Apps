@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import CharacterCard from './CharacterCard';
 
 
-const api = 'https://rickandmortyapi.com/api/character/';
 
-export default function CharacterList() {
+export default function CharacterList(props) {
+  const api = 'https://rickandmortyapi.com/api/character/';
+
   // TODO: Add useState to track data from useEffect
   const [characters, setCharacters] = useState([]);
 
@@ -19,12 +20,13 @@ export default function CharacterList() {
       console.log(error);
     })
   }, []);
- console.log(characters)
+
   return (
     <section className="character-list">
     {/* <h2>TODO: `array.map()` over your state here!</h2> */}
       <div>
         {characters.map(character => (
+
           <CharacterCard 
             character={character}
             key={character.id} 
